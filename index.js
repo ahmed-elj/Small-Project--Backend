@@ -49,7 +49,7 @@ app.post('/login', async (req, res) => {
             return res.status(400).send('Invalid email or password.');
         }
 
-        const token = jwt.sign({ _id: user._id }, secretKey, { expiresIn: '1h' });
+        const token = jwt.sign({ _id: user._id }, secretKey);
         res.send({ message: 'Login successful', token });
     } catch (error) {
         res.status(500).send('Internal Server Error');
