@@ -1,9 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const User = require('./models/user'); // Import the User model
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const secretKey = 'your_secret_key'; // Replace with your actual secret key
+const AuthRoutes = require('./Routes/AuthRoutes');
 
 
 const app = express();
@@ -19,44 +16,8 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-app.post('/users', async (req, res) => {
-    try {
-        const user = new User({
-            name: req.body.name,
-            email: req.body.email,
-            password: req.body.password
-        });
-        await user.save();
-        res.status(201).send(user);
-        console.log(`user's info sent! ${user.name}`)
-    } catch (error) {
-        res.status(400).send(error.message);
-    }
-});
 
-
-app.post('/login', async (req, res) => {
-    try {
-        const { email, password } = req.body;
-        const user = await User.findOne({ email });
-
-        if (!user) {
-            return res.status(400).send('Invalid email or password.');
-        }
-
-        const validPassword = await bcrypt.compare(password, user.password);
-        if (!validPassword) {
-            return res.status(400).send('Invalid email or password.');
-        }
-
-        const token = jwt.sign({ _id: user._id }, secretKey);
-        res.send({ message: 'Login successful', token });
-    } catch (error) {
-        res.status(500).send('Internal Server Error');
-    }
-});
-
-
+app.use('/api', AuthRoutes); //singup and login
 
 
 app.listen(port, () => {
