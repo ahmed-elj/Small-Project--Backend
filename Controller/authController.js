@@ -1,9 +1,9 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const secretKey = 'your_secret_key'; 
+const secretKey = ''; 
 const User = require('../models/user');
 
-//
+//singup function
 exports.singup = async (req, res) => {
     try {
         const user = new User({
@@ -19,7 +19,7 @@ exports.singup = async (req, res) => {
     }
 };
 
-
+//login function
 exports.login = async (req, res) => {
     try {
         const { email, password } = req.body;
