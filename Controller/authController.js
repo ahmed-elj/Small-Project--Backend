@@ -14,6 +14,7 @@ exports.singup = async (req, res) => {
         await user.save();
         res.status(201).send(user);
         console.log(`user's info sent! ${user.name}`);
+        res.send(message="user singup!");
     } catch (error) {
         res.status(400).send(error.message);
     }
