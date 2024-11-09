@@ -4,7 +4,7 @@ const secretKey = "your-secret-key-here";
 const User = require("../models/user");
 
 //singup function
-exports.singup = async (req, res) => {
+exports.signup = async (req, res) => {
   try {
     const user = new User({
       name: req.body.name,
